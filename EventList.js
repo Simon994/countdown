@@ -9,7 +9,10 @@ class EventList extends Component {
   }
   
   componentDidMount() {
-    const events = require('./db.json').events
+    const events = require('./db.json').events.map(event => ({
+      ...event,
+      date: new Date(event.date)
+    }))
     this.setState({ events })
   }
 

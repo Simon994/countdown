@@ -52,7 +52,7 @@ const EventCard = (props) => {
 EventCard.propTypes = {
   event: PropTypes.shape({
     title: PropTypes.string.isRequired,
-    date: PropTypes.string
+    date: PropTypes.instanceOf(Date)
   })
 }
 
