@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     margin: 10,
     marginTop: 5,
-    marginBottom: 5
+    marginBottom: 20
   },
   cardHeader: {
     flex: 1,
