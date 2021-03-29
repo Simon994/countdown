@@ -1,17 +1,20 @@
 import React, { Component } from 'react'
 import {
+  Keyboard,
   View,
   StyleSheet,
   Text,
   TouchableHighlight,
   TextInput
 } from 'react-native'
+import DateTimePicker from '@react-native-community/datetimepicker'
+import { formatDate } from './api'
 
 
 const styles = StyleSheet.create({
   fieldContainer: {
     margin: 20,
-    backgroundColor: 'blue'
+    backgroundColor: '#fff'
   },
   eventInput: {
     backgroundColor: '#333',
@@ -32,13 +35,21 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontSize: 18,
+  },
+  dateInput: {
+    borderTopWidth: 0.5,
+    borderTopColor: '#333',
+    backgroundColor: 'white',
+    color: 'black'
   }
 })
 
 class EventForm extends Component {
 
   state = {
-    text: ''
+    text: '',
+    date: new Date(1598051730000),
+    show: false
   }
 
 
@@ -51,6 +62,22 @@ class EventForm extends Component {
     this.setState({
       text
     })
+  }
+
+  handleDatePress = () => {
+    console.log('FOCUSSEDD🚨')
+    this.setState({
+      show: true
+    })
+  }
+
+  setDate = (event, selectedDate) => {
+    const newDate = selectedDate  || this.state.date
+    this.setState({
+      date: newDate,
+      show: false
+    })
+    Keyboard.dismiss()
   }
 
   render() {
@@ -69,6 +96,12 @@ class EventForm extends Component {
             onChangeText={this.handleChangeText}
             value={this.state.text}
           ></TextInput>
+          <TextInput
+            style={[styles.eventInput, styles.dateInput]}
+            placeholder='Date'
+            value={formatDate(this.state.date.toString())}
+            onFocus={this.handleDatePress}
+          ></TextInput>
         </View>
         <TouchableHighlight
           onPress={this.handleAddPress}
@@ -76,6 +109,14 @@ class EventForm extends Component {
         >
           <Text style={styles.buttonText}>Add</Text>
         </TouchableHighlight>
+        {this.state.show &&
+          <DateTimePicker
+            value={this.state.date}
+            is24Hour={true}
+            display="default"
+            onChange={this.setDate}
+          />
+        }
       </View>
     )
   }
