@@ -14,6 +14,11 @@
       "title": "Third release",
       "date": "2022-03-15T00:00:00.000Z",
       "id": "3"
+    },
+    {
+      "title": "Here's another event, added by the app!",
+      "date": "2020-08-28T23:15:30.000Z",
+      "id": "bad882f7-a97f-4664-9cbb-9346fe2b4b1e"
     }
   ]
 }

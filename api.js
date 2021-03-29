@@ -1,12 +1,18 @@
+/* eslint-disable no-undef */
 import moment from 'moment'
 import Constants from 'expo-constants'
+import 'react-native-get-random-values'
+import { v4 as uuidv4 } from 'uuid'
+
+const { manifest } = Constants
+const apiUrl = manifest.packagerOpts.dev
+  ? 'http://localhost:3000/events'
+  : 'api.example.com'
 
 export async function getEvents() {
   try {
-    // eslint-disable-next-line no-undef
-    const response = await fetch('http://localhost:3000/events')
+    const response = await fetch(apiUrl)
     const events = await response.json()
-    console.log('RESPONSE IS::::', events)
     return events.map(e => (
       { ...e, date: new Date(e.date) }
     ))
@@ -14,6 +20,22 @@ export async function getEvents() {
     console.error('SOMETHING WENT HORRIBLY WRONG 💩', error)
     return
   }
+}
+
+export function saveEvent({ title, date }) {
+  return fetch(apiUrl, {
+    method: 'POST',
+    body: JSON.stringify({
+      title,
+      date,
+      id: uuidv4()
+    }),
+    headers: new Headers({
+      'Content-Type': 'application/json'
+    })
+  })
+    .then(res => res.json())
+    .catch(error => console.error('Error:', error))
 }
 
 export function formatDate(dateString) {

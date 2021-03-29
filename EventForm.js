@@ -8,7 +8,7 @@ import {
   TextInput
 } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker'
-import { formatDate } from './api'
+import { formatDate, saveEvent } from './api'
 
 
 const styles = StyleSheet.create({
@@ -54,7 +54,8 @@ class EventForm extends Component {
 
 
   handleAddPress = () => {
-    console.log(this.state)
+    const eventToSave = {title: this.state.text, date: this.state.date}
+    saveEvent(eventToSave)
     this.props.navigation.navigate('Home')
   }
 
