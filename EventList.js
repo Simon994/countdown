@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Button, FlatList, StyleSheet } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
+import { getEvents } from './api'
 
 import EventCard from './EventCard'
 
@@ -18,7 +19,7 @@ class EventList extends Component {
     events: []
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     setInterval(() => {
       this.setState({
         events: this.state.events.map(evt => ({
@@ -28,11 +29,10 @@ class EventList extends Component {
       })
     }, 1000)
 
-    const events = require('./db.json').events.map(event => ({
-      ...event,
-      date: new Date(event.date)
-    }))
-    this.setState({ events })
+    getEvents()
+      .then(
+        events => this.setState({ events })
+      )
   }
 
   render() {

@@ -65,7 +65,6 @@ class EventForm extends Component {
   }
 
   handleDatePress = () => {
-    console.log('FOCUSSEDD🚨')
     this.setState({
       show: true
     })
